@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="OnClick">
-    <h5>{{ header }}</h5>
+    <h5>{{ email + password }}</h5>
     <!--space добавляет отступы внутри между каждым элементом-->
     <div class="w-min mx-auto space-y-6">
       <div>
