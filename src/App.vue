@@ -1,35 +1,12 @@
-<script setup></script>
+<script setup>
+import FormLogin from "./components/FormLogin.vue";
+</script>
 
 <template>
   <!--Все изучается на практике -->
 
   <!-- hover модификатор наведения -->
-  <h1 class="text-4xl hover:text-lime-400 cursor-pointer">Hello</h1>
-
-  <!--space добавляет отступы внутри между каждым элементом-->
-  <div class="w-min mx-auto space-y-6">
-    <div>
-      <p class="text-left ml-2">Логин</p>
-
-      <!--rounded округление-->
-      <!--focus модификатор фокусироки на элементе-->
-      <!--В этом поле ввода обводка убирается при расфокусировке (при выборе заметно как внутри элемента происходит смещение)-->
-      <input
-        type="text"
-        placeholder="Текст"
-        class="bg-zinc-700 rounded-lg focus:border-2 border-red-400 outline-none px-4 py-2 h-8 w-72 font-bold"
-      />
-    </div>
-    <div>
-      <p class="text-left ml-2">Пароль</p>
-      <!--В этом поле ввода обводка становится прозрачной при расфокусировке (элемент нечего не смещает внутри)-->
-      <input
-        type="text"
-        placeholder="Текст"
-        class="bg-zinc-700 rounded-lg border-transparent border-2 focus:border-red-400 outline-none px-4 py-2 h-8 w-72 font-bold"
-      />
-    </div>
-  </div>
+  <FormLogin>PC</FormLogin>
 
   <div class="flex flex-col lg:flex-row mx-auto my-24 space-x-10">
     <a href="https://vitejs.dev" target="_blank">
