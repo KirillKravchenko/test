@@ -1,22 +1,51 @@
-<script setup>
-import FormLogin from "./components/FormLogin.vue";
-</script>
-
 <template>
   <!--Все изучается на практике -->
 
   <!-- hover модификатор наведения -->
-  <FormLogin>PC</FormLogin>
+  <FormLogin @create="OnCreate"> </FormLogin>
 
-  <div class="flex flex-col lg:flex-row mx-auto my-24 space-x-10">
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="h-72" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="h-72" alt="Vue logo" />
-    </a>
+  <hr class="my-5 border-gray-600" />
+
+  <div class="space-y-4">
+    <FormItem
+      v-for="(item, i) in listItems"
+      :login="item.email"
+      :password="item.password"
+      @close="OnRemove(i)"
+      @click="isEdit = true"
+    />
   </div>
+
+  <FormEdit v-if="isEdit" @close="isEdit = false"> </FormEdit>
 </template>
+
+<script setup>
+import { ref } from "vue";
+
+import FormLogin from "./components/FormLogin.vue";
+import FormItem from "./components/FormItem.vue";
+import FormEdit from "./components/FormEdit.vue";
+
+const listItems = ref([
+  {
+    email: "LOGIN",
+    password: "PASS",
+  },
+]);
+
+const OnCreate = (email, password) => {
+  listItems.value.push({
+    email,
+    password,
+  });
+};
+
+const OnRemove = (idx) => {
+  listItems.value.splice(idx, 1);
+};
+
+const isEdit = ref(false);
+</script>
 
 <style>
 @tailwind base;
