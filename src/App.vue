@@ -2,7 +2,7 @@
   <!--Все изучается на практике -->
 
   <!-- hover модификатор наведения -->
-  <FormLogin @create="OnCreate"> </FormLogin>
+  <FormLogin v-model:email="bufEmail" v-model:password="bufPassword" @create="OnCreate" />
 
   <hr class="my-5 border-gray-600" />
 
@@ -12,26 +12,45 @@
       :login="item.email"
       :password="item.password"
       @close="OnRemove(i)"
-      @click="isEdit = true"
+      @click="updateItem = item"
     />
   </div>
 
-  <FormEdit v-if="isEdit" @close="isEdit = false"> </FormEdit>
+  <FormEdit
+    v-if="updateItem"
+    :login="updateItem.email"
+    :password="updateItem.password"
+    @save="OnSave"
+    @close="updateItem = undefined"
+  >
+  </FormEdit>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 import FormLogin from "./components/FormLogin.vue";
 import FormItem from "./components/FormItem.vue";
 import FormEdit from "./components/FormEdit.vue";
+
+const bufEmail = ref("");
+const bufPassword = ref("");
 
 const listItems = ref([
   {
     email: "LOGIN",
     password: "PASS",
   },
+  {
+    email: "ewfewv",
+    password: "ecfwedef",
+  },
 ]);
+const updateItem = ref();
+
+watch(updateItem, (item) => {
+  if (item) console.log(item.email);
+});
 
 const OnCreate = (email, password) => {
   listItems.value.push({
@@ -44,7 +63,13 @@ const OnRemove = (idx) => {
   listItems.value.splice(idx, 1);
 };
 
-const isEdit = ref(false);
+const OnSave = (email, password) => {
+  if (!updateItem.value) return;
+
+  updateItem.value.email = email;
+  updateItem.value.password = password;
+  updateItem.value = undefined;
+};
 </script>
 
 <style>

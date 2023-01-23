@@ -3,8 +3,15 @@
     class="flex fixed top-0 left-0 h-screen w-screen bg-[#0000008f] justify-center items-center"
   >
     <div class="relative bg-gray-600 p-6 min-w-[450px] min-h-[200px] rounded-lg">
-      <FormLogin @create="OnUpdate">
-        <template #header> <h6 class="font-bold text-xl">Обновить</h6> </template>
+      <FormLogin
+        v-model:email="newEmail"
+        v-model:password="newPassword"
+        @create="OnUpdate"
+      >
+        <template #header="{ email }">
+          <!-- То что я хотел показать -->
+          <h6 class="font-bold text-xl">Обновить {{ login }} на {{ email }}</h6>
+        </template>
         <template #submit>
           <button
             type="submit"
@@ -25,17 +32,21 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import FormLogin from "./FormLogin.vue";
 
-defineProps({
+const props = defineProps({
   login: { type: String, required: true },
   password: { type: String, required: true },
 });
 
+const newEmail = ref(props.login);
+const newPassword = ref(props.password);
+
 const emit = defineEmits(["close", "save"]);
 
 const OnUpdate = () => {
-  emit("save");
+  emit("save", newEmail.value, newPassword.value);
 };
 const OnClose = () => {
   emit("close");
